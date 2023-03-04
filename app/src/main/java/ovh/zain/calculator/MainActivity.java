@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
         String expression = myEditText.getText().toString();
         try {
             validateExpression(expression);
-            Double result = Calculator.evaluate(expression);
-            ((TextView) findViewById(R.id.textViewResult)).setText(result.toString());
-        } catch (IllegalArgumentException e) {
+            double result = Calculator.evaluate(expression);
+            ((TextView) findViewById(R.id.textViewResult)).setText(Double.toString(result));
+        } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void insertVal(View v) {
         EditText myEditText = (EditText) findViewById(R.id.editTextExpression);
+        if (myEditText.getText().toString().startsWith("W"))
+            myEditText.setText("");
         myEditText.setText(myEditText.getText().toString() + ((Button) v).getTag().toString());
     }
 
