@@ -29,10 +29,30 @@ public class MainActivity extends AppCompatActivity {
         EditText myEditText = findViewById(R.id.editTextExpression);
         String expression = myEditText.getText().toString();
         try {
+            validateExpression(expression);
             Double result = Calculator.evaluate(expression);
             ((TextView) findViewById(R.id.textViewResult)).setText(result.toString());
         } catch (IllegalArgumentException e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void validateExpression(String expression) {
+        if (expression.length() == 0) {
+            throw new IllegalArgumentException("Expression is empty");
+        }
+        if (expression.charAt(0) == '+' || expression.charAt(0) == '*' || expression.charAt(0) == '/') {
+            throw new IllegalArgumentException("Expression cannot start with " + expression.charAt(0));
+        }
+        if (expression.charAt(expression.length() - 1) == '+' || expression.charAt(expression.length() - 1) == '*' || expression.charAt(expression.length() - 1) == '/') {
+            throw new IllegalArgumentException("Expression cannot end with " + expression.charAt(expression.length() - 1));
+        }
+        for (int i = 0; i < expression.length() - 1; i++) {
+            if (expression.charAt(i) == '+' || expression.charAt(i) == '*' || expression.charAt(i) == '/') {
+                if (expression.charAt(i + 1) == '+' || expression.charAt(i + 1) == '*' || expression.charAt(i + 1) == '/') {
+                    throw new IllegalArgumentException("Expression cannot have two operators in a row");
+                }
+            }
         }
     }
 
