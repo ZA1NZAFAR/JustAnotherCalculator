@@ -1,5 +1,8 @@
 package ovh.zain.calculator;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import java.util.Stack;
 
 public class Calculator {
@@ -68,4 +71,40 @@ public class Calculator {
         }
     }
 
+    public static void evaluateAsyncWithHandler(final String expression, final CalculatorCallback callback) {
+        new Thread(() -> {
+            try {
+                validateExpression(expression);
+                double result = evaluate(expression);
+                new Handler(Looper.getMainLooper()).post(() -> callback.onSuccess(result));
+            } catch (Exception e) {
+                new Handler(Looper.getMainLooper()).post(() -> callback.onError(e));
+            }
+        }).start();
+    }
+
+    private static void validateExpression(String expression) {
+        if (expression.length() == 0) {
+            throw new IllegalArgumentException("Expression is empty");
+        }
+        if (expression.charAt(0) == '+' || expression.charAt(0) == '*' || expression.charAt(0) == '/') {
+            throw new IllegalArgumentException("Expression cannot start with " + expression.charAt(0));
+        }
+        if (expression.charAt(expression.length() - 1) == '+' || expression.charAt(expression.length() - 1) == '*' || expression.charAt(expression.length() - 1) == '/' || expression.charAt(expression.length() - 1) == '-') {
+            throw new IllegalArgumentException("Expression cannot end with " + expression.charAt(expression.length() - 1));
+        }
+        for (int i = 0; i < expression.length() - 1; i++) {
+            if (expression.charAt(i) == '+' || expression.charAt(i) == '*' || expression.charAt(i) == '/' || expression.charAt(i) == '-') {
+                if (expression.charAt(i + 1) == '+' || expression.charAt(i + 1) == '*' || expression.charAt(i + 1) == '/' || expression.charAt(i + 1) == '-') {
+                    throw new IllegalArgumentException("Expression cannot have two operators in a row");
+                }
+            }
+        }
+    }
+
+    public interface CalculatorCallback {
+        void onSuccess(double result);
+
+        void onError(Exception e);
+    }
 }

@@ -19,8 +19,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         LinearLayout myLayout = findViewById(R.id.farRightVertical);
         myLayout.addView(getEqualButton());
-
-
     }
 
 
@@ -28,33 +26,21 @@ public class MainActivity extends AppCompatActivity {
     private void onEqualClick() {
         EditText myEditText = findViewById(R.id.editTextExpression);
         String expression = myEditText.getText().toString();
-        try {
-            validateExpression(expression);
-            double result = Calculator.evaluate(expression);
-            ((TextView) findViewById(R.id.textViewResult)).setText(Double.toString(result));
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
+        Calculator.evaluateAsyncWithHandler(expression, new Calculator.CalculatorCallback() {
+            @Override
+            public void onSuccess(double result) {
+                ((TextView) findViewById(R.id.textViewResult)).setText(Double.toString(result));
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println(e.getMessage());
+            }
+        });
     }
 
-    private void validateExpression(String expression) {
-        if (expression.length() == 0) {
-            throw new IllegalArgumentException("Expression is empty");
-        }
-        if (expression.charAt(0) == '+' || expression.charAt(0) == '*' || expression.charAt(0) == '/') {
-            throw new IllegalArgumentException("Expression cannot start with " + expression.charAt(0));
-        }
-        if (expression.charAt(expression.length() - 1) == '+' || expression.charAt(expression.length() - 1) == '*' || expression.charAt(expression.length() - 1) == '/') {
-            throw new IllegalArgumentException("Expression cannot end with " + expression.charAt(expression.length() - 1));
-        }
-        for (int i = 0; i < expression.length() - 1; i++) {
-            if (expression.charAt(i) == '+' || expression.charAt(i) == '*' || expression.charAt(i) == '/') {
-                if (expression.charAt(i + 1) == '+' || expression.charAt(i + 1) == '*' || expression.charAt(i + 1) == '/') {
-                    throw new IllegalArgumentException("Expression cannot have two operators in a row");
-                }
-            }
-        }
-    }
+
 
 
     private Button getEqualButton() {
