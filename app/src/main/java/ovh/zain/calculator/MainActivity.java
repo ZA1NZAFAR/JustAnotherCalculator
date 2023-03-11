@@ -2,6 +2,9 @@ package ovh.zain.calculator;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,33 +31,47 @@ public class MainActivity extends AppCompatActivity {
     private void onEqualClick() {
         EditText myEditText = findViewById(R.id.editTextExpression);
         String expression = myEditText.getText().toString();
-        try {
-            validateExpression(expression);
-            double result = Calculator.evaluate(expression);
-            ((TextView) findViewById(R.id.textViewResult)).setText(Double.toString(result));
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
+
+// ----------------------USING HANDLER
+//        Handler handler = new Handler(Looper.getMainLooper()) {
+//            @Override
+//            public void handleMessage(Message msg) {
+//                System.out.println("Result: " + msg.obj);
+//                ((TextView) findViewById(R.id.textViewResult)).setText(msg.obj.toString());
+//            }
+//        };
+//        try {
+//            Calculator.evaluateWithHandler(expression, handler);
+//        } catch (Exception e) {
+//            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+//        }
+
+
+// ----------------------USING ASYNC TASK
+//        Calculator.evaluateWithAsyncTask(expression, new Calculator.ResultCallback() {
+//            @Override
+//            public void onResult(double result) {
+//                ((TextView) findViewById(R.id.textViewResult)).setText(Double.toString(result));
+//            }
+//        });
+
+
+// ----------------------Final Solution
+        Calculator.evaluateAsyncWithHandler(expression, new Calculator.CalculatorCallback() {
+            @Override
+            public void onSuccess(double result) {
+                ((TextView) findViewById(R.id.textViewResult)).setText(Double.toString(result));
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
-    private void validateExpression(String expression) {
-        if (expression.length() == 0) {
-            throw new IllegalArgumentException("Expression is empty");
-        }
-        if (expression.charAt(0) == '+' || expression.charAt(0) == '*' || expression.charAt(0) == '/') {
-            throw new IllegalArgumentException("Expression cannot start with " + expression.charAt(0));
-        }
-        if (expression.charAt(expression.length() - 1) == '+' || expression.charAt(expression.length() - 1) == '*' || expression.charAt(expression.length() - 1) == '/') {
-            throw new IllegalArgumentException("Expression cannot end with " + expression.charAt(expression.length() - 1));
-        }
-        for (int i = 0; i < expression.length() - 1; i++) {
-            if (expression.charAt(i) == '+' || expression.charAt(i) == '*' || expression.charAt(i) == '/') {
-                if (expression.charAt(i + 1) == '+' || expression.charAt(i + 1) == '*' || expression.charAt(i + 1) == '/') {
-                    throw new IllegalArgumentException("Expression cannot have two operators in a row");
-                }
-            }
-        }
-    }
+
 
 
     private Button getEqualButton() {
@@ -72,14 +89,14 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void insertVal(View v) {
-        EditText myEditText = (EditText) findViewById(R.id.editTextExpression);
+        EditText myEditText = findViewById(R.id.editTextExpression);
         if (myEditText.getText().toString().startsWith("W"))
             myEditText.setText("");
         myEditText.setText(myEditText.getText().toString() + ((Button) v).getTag().toString());
     }
 
     public void removeLastCharacterInExpression(View v) {
-        EditText myEditText = (EditText) findViewById(R.id.editTextExpression);
+        EditText myEditText = findViewById(R.id.editTextExpression);
         String expression = myEditText.getText().toString();
         if (expression.length() > 0) {
             myEditText.setText(expression.substring(0, expression.length() - 1));
@@ -87,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearEverything(View v) {
-        EditText myEditText = (EditText) findViewById(R.id.editTextExpression);
+        EditText myEditText = findViewById(R.id.editTextExpression);
         myEditText.setText("");
         ((TextView) findViewById(R.id.textViewResult)).setText("0.0");
     }
