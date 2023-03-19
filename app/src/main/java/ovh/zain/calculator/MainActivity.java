@@ -32,31 +32,6 @@ public class MainActivity extends AppCompatActivity {
         EditText myEditText = findViewById(R.id.editTextExpression);
         String expression = myEditText.getText().toString();
 
-// ----------------------USING HANDLER
-//        Handler handler = new Handler(Looper.getMainLooper()) {
-//            @Override
-//            public void handleMessage(Message msg) {
-//                System.out.println("Result: " + msg.obj);
-//                ((TextView) findViewById(R.id.textViewResult)).setText(msg.obj.toString());
-//            }
-//        };
-//        try {
-//            Calculator.evaluateWithHandler(expression, handler);
-//        } catch (Exception e) {
-//            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-//        }
-
-
-// ----------------------USING ASYNC TASK
-//        Calculator.evaluateWithAsyncTask(expression, new Calculator.ResultCallback() {
-//            @Override
-//            public void onResult(double result) {
-//                ((TextView) findViewById(R.id.textViewResult)).setText(Double.toString(result));
-//            }
-//        });
-
-
-// ----------------------Final Solution
         Calculator.evaluateAsyncWithHandler(expression, new Calculator.CalculatorCallback() {
             @Override
             public void onSuccess(double result) {
