@@ -13,12 +13,12 @@
 
         <EditText
             android:id="@+id/editTextExpression"
-            android:focusable="false"
-            android:clickable="false"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.7"
             android:background="@null"
+            android:clickable="false"
+            android:focusable="false"
             android:inputType="textPersonName"
             android:text="Write your expression here" />
 
@@ -59,8 +59,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="7"
                     android:tag="7"
+                    android:text="7"
                     android:textSize="50sp" />
 
                 <Button
@@ -70,8 +70,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="8"
                     android:tag="8"
+                    android:text="8"
                     android:textSize="50sp" />
 
                 <Button
@@ -81,8 +81,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="9"
                     android:tag="9"
+                    android:text="9"
                     android:textSize="50sp" />
 
                 <Button
@@ -92,8 +92,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="➕"
                     android:tag="+"
+                    android:text="➕"
                     android:textSize="30sp" />
             </LinearLayout>
 
@@ -112,8 +112,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="4"
                     android:tag="4"
+                    android:text="4"
                     android:textSize="50sp" />
 
                 <Button
@@ -123,8 +123,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="5"
                     android:tag="5"
+                    android:text="5"
                     android:textSize="50sp" />
 
                 <Button
@@ -134,8 +134,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="6"
                     android:tag="6"
+                    android:text="6"
                     android:textSize="50sp" />
 
                 <Button
@@ -145,8 +145,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="➖"
                     android:tag="-"
+                    android:text="➖"
                     android:textSize="30sp" />
             </LinearLayout>
 
@@ -165,8 +165,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="1"
                     android:tag="1"
+                    android:text="1"
                     android:textSize="50sp" />
 
                 <Button
@@ -176,8 +176,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="2"
                     android:tag="2"
+                    android:text="2"
                     android:textSize="50sp" />
 
                 <Button
@@ -187,8 +187,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="3"
                     android:tag="3"
+                    android:text="3"
                     android:textSize="50sp" />
 
                 <Button
@@ -198,8 +198,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="✖️"
                     android:tag="*"
+                    android:text="✖️"
                     android:textSize="30sp" />
             </LinearLayout>
 
@@ -217,8 +217,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.75"
                     android:onClick="insertVal"
-                    android:text="0"
                     android:tag="0"
+                    android:text="0"
                     android:textSize="50sp" />
 
                 <Button
@@ -228,8 +228,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="0.25"
                     android:onClick="insertVal"
-                    android:text="➗"
                     android:tag="/"
+                    android:text="➗"
                     android:textSize="30sp" />
             </LinearLayout>
         </LinearLayout>

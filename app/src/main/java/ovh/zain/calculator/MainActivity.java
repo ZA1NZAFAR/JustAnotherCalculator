@@ -1,10 +1,10 @@
 package ovh.zain.calculator;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import ovh.zain.calculator.tools.Calculator;
+import ovh.zain.calculator.tools.Keys;
+import ovh.zain.calculator.tools.StringSaver;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Calculator.evaluateAsyncWithHandler(expression, new Calculator.CalculatorCallback() {
             @Override
             public void onSuccess(double result) {
+                StringSaver.saveResult(getApplicationContext(), Keys.LAST_CALCULATION.toString(), expression + " : " + result);
                 ((TextView) findViewById(R.id.textViewResult)).setText(Double.toString(result));
             }
 
@@ -45,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
 
 
     private Button getEqualButton() {
@@ -83,5 +86,29 @@ public class MainActivity extends AppCompatActivity {
         myEditText.setText("");
         ((TextView) findViewById(R.id.textViewResult)).setText("0.0");
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.browse) {
+            //Launch calcul_history activity
+            Intent intent = new Intent(this, CalculationHistory.class);
+            startActivity(intent);
+        }
+        if (id == R.id.history) {
+            // Handle menu item click
+            System.out.println("Hello2");
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }

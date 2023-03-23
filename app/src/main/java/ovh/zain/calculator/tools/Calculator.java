@@ -1,4 +1,4 @@
-package ovh.zain.calculator;
+package ovh.zain.calculator.tools;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -6,8 +6,6 @@ import android.os.Looper;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
-import java.text.DecimalFormat;
-import java.util.Stack;
 
 public class Calculator {
 
