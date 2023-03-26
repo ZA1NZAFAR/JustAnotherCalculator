@@ -102,10 +102,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, CalculationHistory.class);
             startActivity(intent);
         }
-        if (id == R.id.history) {
-            // Handle menu item click
-            System.out.println("Hello2");
-        }
 
         return super.onOptionsItemSelected(item);
     }
